@@ -1,14 +1,11 @@
 const functions = require("firebase-functions");
-const admin = require("firebase-admin");
 const axios = require("axios");
 
-admin.initializeApp();
-
-exports.getChatGPTResponse = functions.https.onCall(async (data, context) => {
-  const userMessage = data.message;
+exports.getChatGPTResponse = functions.https.onRequest(async (req, res) => {
+  const userMessage = req.body.message;
 
   if (!userMessage) {
-    throw new functions.https.HttpsError("invalid-argument", "Missing message input.");
+    return res.status(400).json({ error: "Missing message input." });
   }
 
   try {
@@ -38,10 +35,9 @@ exports.getChatGPTResponse = functions.https.onCall(async (data, context) => {
     );
 
     const reply = response.data.choices[0].message.content;
-    return { reply };
-  } catch (error) {
-    console.error("OpenAI error:", error.response?.data || error.message);
-    throw new functions.https.HttpsError("internal", "OpenAI call failed");
+    return res.status(200).json({ reply });
+  } catch (err) {
+    console.error("OpenAI Error:", err.message);
+    return res.status(500).json({ error: "Something went wrong." });
   }
 });
-// Triggering redeploy
