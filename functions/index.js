@@ -1,9 +1,12 @@
 const functions = require("firebase-functions");
 const axios = require("axios");
 
-exports.getChatGPTResponse = functions
-  .runWith({ secrets: ["OPENAI_API_KEY"] }) // <-- THIS LINE is the fix
-  .https.onRequest(async (req, res) => {
+    exports.getChatGPTResponse = functions
+    .v2
+    .https
+    .onRequest({
+      secrets: ["OPENAI_API_KEY"]
+    }, async (req, res) => {
     const userMessage = req.body.message;
 
     if (!userMessage) {
