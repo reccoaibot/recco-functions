@@ -1,12 +1,11 @@
-const functions = require("firebase-functions");
+const functions = require("firebase-functions/v2");
 const axios = require("axios");
 
-    exports.getChatGPTResponse = functions
-    .v2
-    .https
-    .onRequest({
-      secrets: ["OPENAI_API_KEY"]
-    }, async (req, res) => {
+exports.getChatGPTResponse = functions
+  .https
+  .onRequest({
+    secrets: ["OPENAI_API_KEY"],
+  }, async (req, res) => {
     const userMessage = req.body.message;
 
     if (!userMessage) {
