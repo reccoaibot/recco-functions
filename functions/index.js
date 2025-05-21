@@ -44,3 +44,4 @@ exports.getChatGPTResponse = functions.https.onCall(async (data, context) => {
     throw new functions.https.HttpsError("internal", "OpenAI call failed");
   }
 });
+// Triggering redeploy
