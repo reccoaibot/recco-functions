@@ -2,12 +2,12 @@
   "name": "recco-functions",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "18"
+  },
   "dependencies": {
-    "firebase-functions": "^4.4.1",
+    "firebase-functions": "^5.1.0",
     "firebase-admin": "^11.10.0",
     "axios": "^1.6.8"
-  },
-  "engines": {
-    "node": "22"
   }
 }
