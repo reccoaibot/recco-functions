@@ -8,6 +8,7 @@ exports.getChatGPTResponse = functions
       secrets: ["OPENAI_API_KEY"],
     },
     async (req, res) => {
+      console.log("Incoming messages string:", req.body.messages);
       const messages = JSON.parse(req.body.messages);
 
       if (!messages || !Array.isArray(messages)) {
