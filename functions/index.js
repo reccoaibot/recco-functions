@@ -38,7 +38,10 @@ exports.getChatGPTResponse = functions
         }
       );
 
-      const reply = response.data.choices[0].message.content;
+      const rawReply = response.data.choices?.[0]?.message?.content?.trim() || "";
+      const reply = rawReply.length > 0
+        ? rawReply
+        : "Sorry, I didn’t quite catch that. Could you rephrase?";
       return res.status(200).json({ reply });
     } catch (err) {
       console.error("OpenAI Error:", err.response?.data || err.message || err);
