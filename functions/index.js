@@ -9,7 +9,16 @@ exports.getChatGPTResponse = functions
     },
     async (req, res) => {
       console.log("Incoming messages string:", req.body.messages);
-      const messages = JSON.parse(req.body.messages);
+      let messages;
+      try {
+        messages = JSON.parse(req.body.messages);
+        console.log("Parsed messages:", messages);
+      } catch (e) {
+        console.error("Failed to parse messages:", req.body.messages);
+        return res.status(400).json({ error: "Invalid message format" });
+      }
+
+      
 
       if (!messages || !Array.isArray(messages)) {
         return res
